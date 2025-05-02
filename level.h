@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include "enemies_manager.h"
 #include "globals.h"
 
 bool is_inside_level(int row, int column) {
@@ -79,7 +80,7 @@ void load_level(int offset) {
 
     // Instantiate entities
     spawn_player();
-    spawn_enemies();
+    EnemiesManager::getInstance().spawn_enemies();
 
     // Calculate positioning and sizes
     derive_graphics_metrics_from_loaded_level();

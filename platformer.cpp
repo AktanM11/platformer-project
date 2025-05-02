@@ -36,7 +36,7 @@ void update_game() {
             }
 
             update_player();
-            update_enemies();
+            EnemiesManager::getInstance().update_enemies();
 
             if (IsKeyPressed(KEY_ESCAPE)) {
                 game_state = PAUSED_STATE;
