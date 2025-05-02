@@ -7,6 +7,7 @@
 #include "graphics.h"
 #include "assets.h"
 #include "utilities.h"
+#include "enemies_manager.h"
 
 void update_game() {
     game_frame++;

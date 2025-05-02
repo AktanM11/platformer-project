@@ -22,6 +22,9 @@ public:
     void update_enemies();
     bool is_colliding_with_enemies(Vector2 pos) const;
     void remove_colliding_enemy(Vector2 pos);
+
+    static void draw_enemies();
+
     private:
     EnemiesManager() = default;
     ~EnemiesManager() = default;

@@ -64,3 +64,16 @@ void EnemiesManager::remove_colliding_enemy(const Vector2 pos) {
         }
     }
 }
+void EnemiesManager::draw_enemies() {
+    // Go over all enemies and draw them, once again accounting to the player's movement and horizontal shift
+    for (auto &enemy : EnemiesManager::getInstance().get_enemies()) {
+        horizontal_shift = (screen_size.x - cell_size) / 2;
+
+        Vector2 pos = {
+            (enemy.get_pos().x - player_pos.x) * cell_size + horizontal_shift,
+            enemy.get_pos().y * cell_size
+    };
+
+        draw_sprite(enemy_walk, pos, cell_size);
+    }
+}
