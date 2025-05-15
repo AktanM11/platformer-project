@@ -115,11 +115,11 @@ inline const float GRAVITY_FORCE         = 0.01f;
 /* Player data */
 
 inline float player_y_velocity = 0;
-inline Vector2 player_pos;
-
-inline bool is_player_on_ground;
-inline bool is_looking_forward;
-inline bool is_moving;
+// inline Vector2 player_pos;
+//
+// inline bool is_player_on_ground;
+// inline bool is_looking_forward;
+// inline bool is_moving;
 
 inline int player_level_scores[LEVEL_COUNT];
 
@@ -298,7 +298,7 @@ inline game_state game_state = MENU_STATE;
 void draw_text(Text &text);
 void derive_graphics_metrics_from_loaded_level();
 void draw_game_overlay();
-void draw_level();
+//void draw_level();
 void draw_player();
 void draw_enemies();
 void draw_menu();
@@ -327,16 +327,16 @@ void set_level_cell(size_t row, size_t column, char chr);
 
 // PLAYER_H
 
-void reset_player_stats();
-void increment_player_score();
-int get_total_player_score();
-
-void spawn_player();
-void kill_player();
-
-void move_player_horizontally(float delta);
-void update_player();
-void update_player_gravity();
+// void reset_player_stats();
+// void increment_player_score();
+// int get_total_player_score();
+//
+// void spawn_player();
+// void kill_player();
+//
+// void move_player_horizontally(float delta);
+// void update_player();
+// void update_player_gravity();
 
 // ENEMY_H
 

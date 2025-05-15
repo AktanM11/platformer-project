@@ -4,6 +4,7 @@
 #include "level.h"
 #include "raylib.h"
 #include "globals.h"
+#include "player.h"
 
 bool LevelManager::is_inside_level(int row, int column) {
     if (row < 0 || row >= LevelManager::getInstanceLevel().get_current_level().get_rows()) return false;
@@ -81,7 +82,7 @@ void LevelManager::load_level(int offset) {
     }
     LevelManager::getInstanceLevel().set_current_level(Level{rows, columns, current_level_data});
     // Instantiate entities
-    spawn_player();
+    Player::getInstancePlayer().spawn_player();
     EnemiesManager::getInstance().spawn_enemies();
 
     // Calculate positioning and sizes
@@ -94,7 +95,47 @@ void LevelManager::load_level(int offset) {
 void LevelManager::unload_level() {
     delete[] LevelManager::getInstanceLevel().get_current_level_data();
 }
+void LevelManager::draw_level() {
+    // Move the x-axis' center to the middle of the screen
+    horizontal_shift = (screen_size.x - cell_size) / 2;
 
+    for (size_t row = 0; row < LevelManager::getInstanceLevel().get_current_level().get_rows(); ++row) {
+        for (size_t column = 0; column < LevelManager::getInstanceLevel().get_current_level().get_columns(); ++column) {
+
+            Vector2 pos = {
+                // Move the level to the left as the player advances to the right,
+                // shifting to the left to allow the player to be centered later
+                (static_cast<float>(column) - Player::getInstancePlayer().get_player_posX()) * cell_size + horizontal_shift,
+                static_cast<float>(row) * cell_size
+        };
+
+            // Draw the level itself
+            char cell = Level::get_level_cell(row, column);
+            switch (cell) {
+                case WALL:
+                    draw_image(wall_image, pos, cell_size);
+                break;
+                case WALL_DARK:
+                    draw_image(wall_dark_image, pos, cell_size);
+                break;
+                case SPIKE:
+                    draw_image(spike_image, pos, cell_size);
+                break;
+                case COIN:
+                    draw_sprite(coin_sprite, pos, cell_size);
+                break;
+                case EXIT:
+                    draw_image(exit_image, pos, cell_size);
+                break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    draw_player();
+    EnemiesManager::getInstance().draw_enemies();
+}
 // Getters and setters
 
 
@@ -102,9 +143,11 @@ void LevelManager::unload_level() {
 void LevelManager::set_level_cell(size_t row,size_t column, char chr) {
     Level::get_level_cell(row, column) = chr;
 }
-char& Level::get_level_cell(size_t row, size_t column) {
-    return LevelManager::getInstanceLevel().get_current_level().data[row * LevelManager::getInstanceLevel().get_current_level().get_columns() + column];
-}
+
 void LevelManager::set_current_level(const Level &current_level) {
     this->current_level = current_level;
+}
+
+char& Level::get_level_cell(size_t row, size_t column) {
+    return LevelManager::getInstanceLevel().get_current_level().data[row * LevelManager::getInstanceLevel().get_current_level().get_columns() + column];
 }
