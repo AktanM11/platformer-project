@@ -25,7 +25,7 @@ public:
 
     static void draw_enemies();
 
-    private:
+private:
     EnemiesManager() = default;
     ~EnemiesManager() = default;
     std::vector<Enemy> enemies{};

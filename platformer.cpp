@@ -131,6 +131,7 @@ int main() {
     load_fonts();
     load_images();
     load_sounds();
+    LevelManager::getInstanceLevel().loadLevelsFromFile("data/levels.rll");
     LevelManager::getInstanceLevel().load_level();
 
     while (!WindowShouldClose()) {
