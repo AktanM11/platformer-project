@@ -1,5 +1,4 @@
 #include "level_manager.h"
-
 #include "enemies_manager.h"
 #include "level.h"
 #include "raylib.h"
@@ -133,7 +132,7 @@ void LevelManager::draw_level() {
         }
     }
 
-    draw_player();
+    Player::getInstancePlayer().draw_player();
     EnemiesManager::getInstance().draw_enemies();
 }
 // Getters and setters

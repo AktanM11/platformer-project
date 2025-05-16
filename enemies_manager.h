@@ -3,7 +3,6 @@
 #include <vector>
 #include <raylib.h>
 #include "enemy.h"
-#include "level.h"
 
 class EnemiesManager {
 public:

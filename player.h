@@ -4,7 +4,6 @@
 #include "globals.h"
 #include "level.h"
 #include "level_manager.h"
-#include "player_manager.h"
 class Player {
 public:
     static Player &getInstancePlayer() {
@@ -15,13 +14,13 @@ public:
     Player operator=(const Player&) = delete;
     Player(Player&&) = delete;
     Player operator=(Player&&) = delete;
-    [[nodiscard]] Vector2 get_player_pos() const {
+    [[nodiscard]] Vector2 get_player_pos() {
         return player_pos;
     }
-    [[nodiscard]] float get_player_posX() const {
+    [[nodiscard]] float get_player_posX() {
         return player_pos.x;
     }
-    [[nodiscard]] float get_player_posY() const {
+    [[nodiscard]] float get_player_posY() {
         return player_pos.y;
     }
     float set_player_posX(const float x) {
@@ -30,10 +29,6 @@ public:
     float set_player_posY(const float y) {
         this->player_pos.y = y;
     }
-    void set_player_pos(const Vector2 player_pos) {
-        this->player_pos = player_pos;
-    }
-
     [[nodiscard]] bool is_player_on_ground() const {
         return player_on_ground;
     }
@@ -61,9 +56,11 @@ public:
     void reset_player_stats();
     void increment_player_score();
     int get_total_player_score();
+    void move_player_horizontally(float delta);
     void spawn_player();
     void kill_player();
-    void move_player_horizontally(float delta);
+    void draw_player();
+    //void move_player_horizontally(float delta);
     void update_player_gravity();
     void update_player();
 private:

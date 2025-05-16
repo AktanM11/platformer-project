@@ -22,7 +22,6 @@ add_executable(platformer platformer.cpp
                             enemies_manager.cpp
                             level_manager.h
                             level_manager.cpp
-                            player_manager.cpp
-                            player_manager.h
+                            player.cpp
 )
 target_link_libraries(platformer PRIVATE raylib)

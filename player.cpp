@@ -1,6 +1,5 @@
 #include "globals.h"
 #include "player.h"
-#include "player_manager.h"
 #include  "enemies_manager.h"
 #include "level.h"
 #include "level_manager.h"
@@ -37,8 +36,8 @@ void Player::spawn_player() {
 
             if (cell == PLAYER) {
                 Player::getInstancePlayer().set_player_posX(column);
-                Player::getInstancePlayer().set_player_posX(row);
-                LevelManager::getInstanceLevel().set_level_cell(row, column, AIR);
+                Player::getInstancePlayer().set_player_posY(row);
+                LevelManager::getInstanceLevel().set_level_cell(getInstancePlayer().get_player_posX(), getInstancePlayer().get_player_posY(), AIR);
                 return;
             }
         }
@@ -57,7 +56,7 @@ void Player::move_player_horizontally(float delta) {
     // See if the player can move further without touching a wall;
     // otherwise, prevent them from getting into a wall by rounding their position
     float next_x = Player::getInstancePlayer().get_player_posX() + delta;
-    if (!LevelManager::getInstanceLevel().is_colliding({next_x, player_pos.y}, WALL)) {
+    if (!LevelManager::getInstanceLevel().is_colliding({next_x, Player::getInstancePlayer().get_player_posY()}, WALL)) {
         Player::getInstancePlayer().set_player_posX(next_x);
     }
     else {
@@ -72,7 +71,7 @@ void Player::move_player_horizontally(float delta) {
 
 void Player::update_player_gravity() {
     // Bounce downwards if approaching a ceiling with upwards velocity
-    if (LevelManager::getInstanceLevel().is_colliding({player_pos.x, player_pos.x - 0.1f}, WALL) && player_y_velocity < 0) {
+    if (LevelManager::getInstanceLevel().is_colliding({Player::getInstancePlayer().get_player_posX(), Player::getInstancePlayer().get_player_posY() - 0.1f}, WALL) && player_y_velocity < 0) {
         player_y_velocity = CEILING_BOUNCE_OFF;
     }
 
@@ -84,7 +83,7 @@ void Player::update_player_gravity() {
 
     // If the player is on ground, zero player's y-velocity
     // If the player is *in* ground, pull them out by rounding their position
-   player_on_ground = LevelManager::getInstanceLevel().is_colliding({player_pos.x, player_pos.y + 0.1f}, WALL);
+   player_on_ground = LevelManager::getInstanceLevel().is_colliding({Player::getInstancePlayer().get_player_posX(), Player::getInstancePlayer().get_player_posY() + 0.1f}, WALL);
     if (player_on_ground) { // Use the getter to check the state
         player_y_velocity = 0;
         player_pos.y = roundf(player_pos.y);
@@ -97,7 +96,7 @@ void Player::update_player() {
     // Interacting with other level elements
     if (LevelManager::getInstanceLevel().is_colliding(player_pos, COIN)) {
         LevelManager::getInstanceLevel().get_collider(player_pos, COIN) = AIR; // Removes the coin
-        increment_player_score();
+        Player::getInstancePlayer().increment_player_score();
     }
 
     if (LevelManager::getInstanceLevel().is_colliding(player_pos, EXIT)) {
@@ -124,8 +123,8 @@ void Player::update_player() {
     }
 
     // Kill the player if they touch a spike or fall below the level
-    if (LevelManager::getInstanceLevel().is_colliding(player_pos, SPIKE) || player_pos.y > LevelManager::getInstanceLevel().get_current_level().get_rows()) {
-        Player::kill_player();
+    if (LevelManager::getInstanceLevel().is_colliding(player_pos, SPIKE) || Player::getInstancePlayer().get_player_posY() > LevelManager::getInstanceLevel().get_current_level().get_rows()) {
+        Player::getInstancePlayer().kill_player();
     }
 
     // Upon colliding with an enemy...
@@ -141,7 +140,34 @@ void Player::update_player() {
         }
         else {
             // ...if not, kill the player
-            kill_player();
+            Player::getInstancePlayer().kill_player();
         }
+    }
+}
+
+void Player::draw_player() {
+    horizontal_shift = (screen_size.x - cell_size) / 2;
+
+    // Shift the camera to the center of the screen to allow to see what is in front of the player
+    Vector2 pos = {
+        horizontal_shift,
+        Player::getInstancePlayer().get_player_posY() * cell_size
+};
+
+    // Pick an appropriate sprite for the player
+    if (game_state == GAME_STATE) {
+        if (!(Player::getInstancePlayer().is_player_on_ground())) {
+            draw_image((Player::getInstancePlayer().is_looking_forward() ? player_jump_forward_image : player_jump_backwards_image), pos, cell_size);
+        }
+        else if (Player::getInstancePlayer().is_moving()) {
+            draw_sprite((Player::getInstancePlayer().is_looking_forward() ? player_walk_forward_sprite : player_walk_backwards_sprite), pos, cell_size);
+            Player::getInstancePlayer().set_is_moving(false);
+        }
+        else {
+            draw_image((Player::getInstancePlayer().is_looking_forward() ? player_stand_forward_image : player_stand_backwards_image), pos, cell_size);
+        }
+    }
+    else {
+        draw_image(player_dead_image, pos, cell_size);
     }
 }

@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "enemies_manager.h"
 #include "player.h"
+#include "utilities.h"
 
 void draw_text(Text &text) {
     // Measure the text, center it to the required position, and draw it
@@ -135,32 +136,32 @@ void draw_game_overlay() {
 //     EnemiesManager::getInstance().draw_enemies();
 // }
 
-void draw_player() {
-    horizontal_shift = (screen_size.x - cell_size) / 2;
-
-    // Shift the camera to the center of the screen to allow to see what is in front of the player
-    Vector2 pos = {
-            horizontal_shift,
-            Player::getInstancePlayer().get_player_posY() * cell_size
-    };
-
-    // Pick an appropriate sprite for the player
-    if (game_state == GAME_STATE) {
-        if (!Player::getInstancePlayer().is_player_on_ground()) {
-            draw_image((Player::getInstancePlayer().is_looking_forward() ? player_jump_forward_image : player_jump_backwards_image), pos, cell_size);
-        }
-        else if (Player::getInstancePlayer().is_moving()) {
-            draw_sprite((Player::getInstancePlayer().is_looking_forward() ? player_walk_forward_sprite : player_walk_backwards_sprite), pos, cell_size);
-            Player::getInstancePlayer().set_is_moving(false);
-        }
-        else {
-            draw_image((Player::getInstancePlayer().is_looking_forward() ? player_stand_forward_image : player_stand_backwards_image), pos, cell_size);
-        }
-    }
-    else {
-        draw_image(player_dead_image, pos, cell_size);
-    }
-}
+// void draw_player() {
+//     horizontal_shift = (screen_size.x - cell_size) / 2;
+//
+//     // Shift the camera to the center of the screen to allow to see what is in front of the player
+//     Vector2 pos = {
+//             horizontal_shift,
+//             Player::getInstancePlayer().get_player_posY() * cell_size
+//     };
+//
+//     // Pick an appropriate sprite for the player
+//     if (game_state == GAME_STATE) {
+//         if (!(Player::getInstancePlayer().is_player_on_ground())) {
+//             draw_image((Player::getInstancePlayer().is_looking_forward() ? player_jump_forward_image : player_jump_backwards_image), pos, cell_size);
+//         }
+//         else if (Player::getInstancePlayer().is_moving()) {
+//             draw_sprite((Player::getInstancePlayer().is_looking_forward() ? player_walk_forward_sprite : player_walk_backwards_sprite), pos, cell_size);
+//             Player::getInstancePlayer().set_is_moving(false);
+//         }
+//         else {
+//             draw_image((Player::getInstancePlayer().is_looking_forward() ? player_stand_forward_image : player_stand_backwards_image), pos, cell_size);
+//         }
+//     }
+//     else {
+//         draw_image(player_dead_image, pos, cell_size);
+//     }
+// }
 
 // void draw_enemies() {
 //     // Go over all enemies and draw them, once again accounting to the player's movement and horizontal shift

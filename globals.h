@@ -299,7 +299,7 @@ void draw_text(Text &text);
 void derive_graphics_metrics_from_loaded_level();
 void draw_game_overlay();
 //void draw_level();
-void draw_player();
+//void draw_player();
 void draw_enemies();
 void draw_menu();
 
@@ -314,16 +314,16 @@ void draw_victory_menu();
 
 // LEVEL_H
 
-bool is_inside_level(int row, int column);
-bool is_colliding(Vector2 pos, char look_for = '#');
-char& get_collider(Vector2 pos, char look_for);
-
-void reset_level_index();
-void load_level(int offset = 0);
-void unload_level();
-
-char& get_level_cell(size_t row, size_t column);
-void set_level_cell(size_t row, size_t column, char chr);
+// bool is_inside_level(int row, int column);
+// bool is_colliding(Vector2 pos, char look_for = '#');
+// char& get_collider(Vector2 pos, char look_for);
+//
+// void reset_level_index();
+// void load_level(int offset = 0);
+// void unload_level();
+//
+// char& get_level_cell(size_t row, size_t column);
+// void set_level_cell(size_t row, size_t column, char chr);
 
 // PLAYER_H
 
