@@ -4,7 +4,6 @@
 #include "raylib.h"
 #include "globals.h"
 #include "player.h"
-#include <exception>
 #include <fstream>
 bool LevelManager::is_inside_level(int row, int column) {
     if (row < 0 || row >= LevelManager::getInstanceLevel().get_current_level().get_rows()) return false;
@@ -172,16 +171,8 @@ Level LevelManager::parseLevelRLE(const std::string& rleData) {
         } else {
             int count = 1;
             if (!counter.empty()) {
-                try {
-                    count = std::stoi(counter);
-                } catch (const std::exception& e) {
-                    throw std::runtime_error("Invalid repeat count: " + counter);
-                }
+                count = std::stoi(counter);
                 counter.clear();
-            }
-            if (c != '#' && c != '=' && c != '-' && c != '@' &&
-                c != '*' && c != '^' && c != '&' && c != 'E') {
-                throw std::runtime_error("Invalid level character: " + std::string(1, c));
             }
 
             for (int j = 0; j < count; j++) {
@@ -192,16 +183,7 @@ Level LevelManager::parseLevelRLE(const std::string& rleData) {
     if (!currentRow.empty()) {
         rows.push_back(currentRow);
     }
-
-    if (rows.empty()) {
-        throw std::runtime_error("No rows found in level data");
-    }
     size_t rowLength = rows[0].length();
-    for (const auto& row : rows) {
-        if (row.length() != rowLength) {
-            throw std::runtime_error("Inconsistent row lengths in level data");
-        }
-    }
     size_t rowCount = rows.size();
     size_t colCount = rowLength;
     char* levelData = new char[rowCount * colCount];
@@ -216,11 +198,6 @@ Level LevelManager::parseLevelRLE(const std::string& rleData) {
 
 std::vector<Level> LevelManager::loadLevelsFromFile(const std::string& filename) {
     std::ifstream file(filename);
-
-    if (!file.is_open()) {
-        throw("Could not open file: " + filename);
-    }
-
     std::string line;
 
     while (std::getline(file, line)) {
@@ -228,9 +205,6 @@ std::vector<Level> LevelManager::loadLevelsFromFile(const std::string& filename)
             continue;
         }
         LEVELS.push_back(parseLevelRLE(line));
-    }
-    if (LEVELS.empty()) {
-        throw("No valid levels found in file");
     }
 
     return LEVELS;

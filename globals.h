@@ -87,7 +87,7 @@ inline const char WALL      = '#',
 // };
 //
 inline int level_index = 0;
-inline const int LEVEL_COUNT = 3;
+inline const int LEVEL_COUNT = 4;
 //
 // inline Level LEVELS[LEVEL_COUNT] = {
 //         LEVEL_1, LEVEL_2, LEVEL_3
@@ -106,7 +106,7 @@ inline int time_to_coin_counter = 0;
 /* Physics constants */
 
 inline const float PLAYER_MOVEMENT_SPEED = 0.1f;
-inline const float JUMP_STRENGTH         = 0.3f;
+inline const float JUMP_STRENGTH         = 0.6f;
 inline const float CEILING_BOUNCE_OFF    = 0.05f;
 inline const float ENEMY_MOVEMENT_SPEED  = 0.07f;
 inline const float BOUNCE_OFF_ENEMY      = 0.1f;
@@ -123,7 +123,7 @@ inline float player_y_velocity = 0;
 
 inline int player_level_scores[LEVEL_COUNT];
 
-inline const int MAX_PLAYER_LIVES = 3;
+inline const int MAX_PLAYER_LIVES = 40;
 inline int player_lives = MAX_PLAYER_LIVES;
 
 
