@@ -11,10 +11,10 @@ public:
     [[nodiscard]] Vector2 get_player_pos() const {
         return player_pos;
     }
-    [[nodiscard]] float get_player_posX() const {
+    [[nodiscard]] float get_player_pos_X() const {
         return player_pos.x;
     }
-    [[nodiscard]] float get_player_posY() const {
+    [[nodiscard]] float get_player_pos_Y() const {
         return player_pos.y;
     }
     float set_player_posX(const float x) {

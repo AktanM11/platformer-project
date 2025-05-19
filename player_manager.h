@@ -19,6 +19,7 @@ class PlayerController {
     void spawn_player();
     void draw_player();
     void update_player();
+    void kill_player();
 private:
     PlayerController() = default;
     ~PlayerController() = default;

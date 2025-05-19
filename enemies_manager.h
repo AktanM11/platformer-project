@@ -14,6 +14,7 @@ public:
         static EnemiesManager instance;
         return instance;
     };
+
     EnemiesManager(const EnemiesManager&) = delete;
     EnemiesManager operator=(const EnemiesManager&) = delete;
     EnemiesManager(EnemiesManager&&) = delete;

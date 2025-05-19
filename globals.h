@@ -332,7 +332,7 @@ void draw_victory_menu();
 // int get_total_player_score();
 //
 // void spawn_player();
-void kill_player();
+//void kill_player();
 //
 // void move_player_horizontally(float delta);
 // void update_player();
