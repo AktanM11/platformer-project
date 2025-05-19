@@ -6,7 +6,7 @@
 
 class EnemiesManager {
 public:
-    [[nodiscard]] std::vector<Enemy> get_enemies() const {
+    [[nodiscard]] std::vector<Enemy> get_enemies() {
         return enemies;
     }
 
@@ -18,11 +18,11 @@ public:
     EnemiesManager operator=(const EnemiesManager&) = delete;
     EnemiesManager(EnemiesManager&&) = delete;
     EnemiesManager operator=(EnemiesManager&&) = delete;
+
     void spawn_enemies();
     void update_enemies();
     bool is_colliding_with_enemies(Vector2 pos) const;
     void remove_colliding_enemy(Vector2 pos);
-
     static void draw_enemies();
 
 private:

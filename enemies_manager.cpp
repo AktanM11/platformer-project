@@ -3,9 +3,9 @@
 #include "level.h"
 #include "level_manager.h"
 #include "player.h"
+#include "player_manager.h"
 
 void EnemiesManager::spawn_enemies() {
-    // Create enemies, incrementing their amount every time a new one is created
     enemies.clear();
 
     for (size_t row = 0; row < LevelManager::getInstanceLevel().get_current_level().get_rows(); ++row) {
@@ -16,7 +16,6 @@ void EnemiesManager::spawn_enemies() {
                         {static_cast<float>(column), static_cast<float>(row)},
                         true
                 });
-
                 LevelManager::getInstanceLevel().set_level_cell(row, column, AIR);
             }
         }

@@ -5,6 +5,9 @@
 #include "globals.h"
 #include "player.h"
 #include <fstream>
+
+#include "player_manager.h"
+
 bool LevelManager::is_inside_level(int row, int column) {
     if (row < 0 || row >= LevelManager::getInstanceLevel().get_current_level().get_rows()) return false;
     if (column < 0 || column >= LevelManager::getInstanceLevel().get_current_level().get_columns()) return false;
@@ -81,7 +84,7 @@ void LevelManager::load_level(int offset) {
     }
     LevelManager::getInstanceLevel().set_current_level(Level{rows, columns, current_level_data});
     // Instantiate entities
-    Player::getInstancePlayer().spawn_player();
+    PlayerController::getInstancePlayerController().spawn_player();
     EnemiesManager::getInstance().spawn_enemies();
 
     // Calculate positioning and sizes
@@ -132,7 +135,7 @@ void LevelManager::draw_level() {
         }
     }
 
-    Player::getInstancePlayer().draw_player();
+    PlayerController::getInstancePlayerController().draw_player();
     EnemiesManager::getInstance().draw_enemies();
 }
 // Getters and setters
@@ -198,14 +201,18 @@ Level LevelManager::parseLevelRLE(const std::string& rleData) {
 
 std::vector<Level> LevelManager::loadLevelsFromFile(const std::string& filename) {
     std::ifstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Failed to open file: " + filename);
+    }
     std::string line;
-
     while (std::getline(file, line)) {
         if (line.empty() || line[0] == ';') {
             continue;
         }
         LEVELS.push_back(parseLevelRLE(line));
     }
-
+    if (line.empty()) {
+        throw std::runtime_error("No valid levels were loaded from the file.");
+    }
     return LEVELS;
 }

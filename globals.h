@@ -106,7 +106,7 @@ inline int time_to_coin_counter = 0;
 /* Physics constants */
 
 inline const float PLAYER_MOVEMENT_SPEED = 0.1f;
-inline const float JUMP_STRENGTH         = 0.6f;
+inline const float JUMP_STRENGTH         = 0.3f;
 inline const float CEILING_BOUNCE_OFF    = 0.05f;
 inline const float ENEMY_MOVEMENT_SPEED  = 0.07f;
 inline const float BOUNCE_OFF_ENEMY      = 0.1f;
@@ -332,7 +332,7 @@ void draw_victory_menu();
 // int get_total_player_score();
 //
 // void spawn_player();
-// void kill_player();
+void kill_player();
 //
 // void move_player_horizontally(float delta);
 // void update_player();

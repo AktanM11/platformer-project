@@ -1,8 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "globals.h"
-#include "level.h"
 #include "level_manager.h"
 class Player {
 public:
@@ -10,17 +8,13 @@ public:
         static Player instance;
         return instance;
     };
-    Player(const Player&) = delete;
-    Player operator=(const Player&) = delete;
-    Player(Player&&) = delete;
-    Player operator=(Player&&) = delete;
-    [[nodiscard]] Vector2 get_player_pos() {
+    [[nodiscard]] Vector2 get_player_pos() const {
         return player_pos;
     }
-    [[nodiscard]] float get_player_posX() {
+    [[nodiscard]] float get_player_posX() const {
         return player_pos.x;
     }
-    [[nodiscard]] float get_player_posY() {
+    [[nodiscard]] float get_player_posY() const {
         return player_pos.y;
     }
     float set_player_posX(const float x) {
@@ -53,18 +47,10 @@ public:
         this->moves = is_moving;
     }
 
-    void reset_player_stats();
-    void increment_player_score();
-    int get_total_player_score();
-    void move_player_horizontally(float delta);
-    void spawn_player();
-    void kill_player();
-    void draw_player();
-    //void move_player_horizontally(float delta);
     void update_player_gravity();
-    void update_player();
+
 private:
-    Player() = default;
+    Player()  = default;
     ~Player() = default;
     Vector2 player_pos;
     bool player_on_ground;

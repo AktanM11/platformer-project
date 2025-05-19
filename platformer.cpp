@@ -20,11 +20,11 @@ void update_game() {
 
         case GAME_STATE:
             if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-                Player::getInstancePlayer().move_player_horizontally(PLAYER_MOVEMENT_SPEED);
+                PlayerController::getInstancePlayerController().move_player_horizontally(PLAYER_MOVEMENT_SPEED);
             }
 
             if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-                Player::getInstancePlayer().move_player_horizontally(-PLAYER_MOVEMENT_SPEED);
+                PlayerController::getInstancePlayerController().move_player_horizontally(-PLAYER_MOVEMENT_SPEED);
             }
 
             // Calculating collisions to decide whether the player is allowed to jump
@@ -38,7 +38,7 @@ void update_game() {
                 player_y_velocity = -JUMP_STRENGTH;
             }
 
-            Player::getInstancePlayer().update_player();
+            PlayerController::getInstancePlayerController().update_player();
             EnemiesManager::getInstance().update_enemies();
 
             if (IsKeyPressed(KEY_ESCAPE)) {
@@ -70,7 +70,7 @@ void update_game() {
         case GAME_OVER_STATE:
             if (IsKeyPressed(KEY_ENTER)) {
                 LevelManager::getInstanceLevel().reset_level_index();
-                Player::getInstancePlayer().reset_player_stats();
+                PlayerController::getInstancePlayerController().reset_player_stats();
                 game_state = GAME_STATE;
                 LevelManager::getInstanceLevel().load_level();
             }
@@ -79,7 +79,7 @@ void update_game() {
         case VICTORY_STATE:
             if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_ESCAPE)) {
                 LevelManager::getInstanceLevel().reset_level_index();
-                Player::getInstancePlayer().reset_player_stats();
+                PlayerController::getInstancePlayerController().reset_player_stats();
                 game_state = MENU_STATE;
                 SetExitKey(KEY_ESCAPE);
             }

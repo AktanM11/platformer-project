@@ -6,19 +6,15 @@
 #include <vector>
 class LevelManager {
 public:
-    [[nodiscard]] std::vector<Level> get_levels() const {
+    [[nodiscard]] std::vector<Level> get_levels() {
         return LEVELS;
-    }
-
-    void set_levels(const std::vector<Level> &levels) {
-        LEVELS = levels;
     }
 
     Level &get_current_level() {
         return current_level;
     }
 
-    [[nodiscard]] char * get_current_level_data() const {
+    [[nodiscard]] char * get_current_level_data() {
         return current_level_data;
     }
 
@@ -30,6 +26,7 @@ public:
     LevelManager operator=(const LevelManager&) = delete;
     LevelManager(LevelManager&&) = delete;
     LevelManager operator=(LevelManager&&) = delete;
+
     bool is_inside_level(int row, int column);
     bool is_colliding(Vector2 pos, char look_for);
     char& get_collider(Vector2 pos, char look_for);
