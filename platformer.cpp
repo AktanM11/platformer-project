@@ -4,7 +4,6 @@
 #include "graphics.h"
 #include "enemies_manager.h"
 #include "level_manager.h"
-#include "assets.h"
 
 void update_game() {
     game_frame++;

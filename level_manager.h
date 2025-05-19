@@ -2,8 +2,8 @@
 #define LEVEL_MANAGER_H
 #include "level.h"
 #include "raylib.h"
-#include <string>
 #include <vector>
+
 class LevelManager {
 public:
     [[nodiscard]] std::vector<Level> get_levels() {
@@ -22,6 +22,7 @@ public:
         static LevelManager instance;
         return instance;
     };
+
     LevelManager(const LevelManager&) = delete;
     LevelManager operator=(const LevelManager&) = delete;
     LevelManager(LevelManager&&) = delete;
@@ -33,13 +34,12 @@ public:
     static void reset_level_index();
     void draw_level();
     void load_level(int offset = 0);
-
     static void unload_level();
-
     void set_level_cell(size_t row,  size_t column, char chr);
     void set_current_level(const Level &current_level);
     Level parseLevelRLE(const std::string& rleData);
     std::vector<Level> loadLevelsFromFile(const std::string& filename);
+
 private:
     LevelManager() = default;
     ~LevelManager() = default;

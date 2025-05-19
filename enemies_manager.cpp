@@ -3,7 +3,6 @@
 #include "level.h"
 #include "level_manager.h"
 #include "player.h"
-#include "player_manager.h"
 
 void EnemiesManager::spawn_enemies() {
     enemies.clear();

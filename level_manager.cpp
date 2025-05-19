@@ -5,7 +5,6 @@
 #include "globals.h"
 #include "player.h"
 #include <fstream>
-
 #include "player_manager.h"
 
 bool LevelManager::is_inside_level(int row, int column) {
