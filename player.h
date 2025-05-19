@@ -1,6 +1,5 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-
 #include "level_manager.h"
 class Player {
 public:
@@ -8,21 +7,28 @@ public:
         static Player instance;
         return instance;
     };
+
     [[nodiscard]] Vector2 get_player_pos() const {
         return player_pos;
     }
-    [[nodiscard]] float get_player_posX() const {
+
+
+    [[nodiscard]] float get_player_pos_X() const {
         return player_pos.x;
     }
-    [[nodiscard]] float get_player_posY() const {
+
+    [[nodiscard]] float get_player_pos_Y() const {
         return player_pos.y;
     }
-    float set_player_posX(const float x) {
+
+    float set_player_pos_X(const float x) {
         this->player_pos.x = x;
     }
-    float set_player_posY(const float y) {
+
+    float set_player_pos_Y(const float y) {
         this->player_pos.y = y;
     }
+
     [[nodiscard]] bool is_player_on_ground() const {
         return player_on_ground;
     }
@@ -57,6 +63,5 @@ private:
     bool looks_forward;
     bool moves;
 };
-
 
 #endif //PLAYER_H

@@ -4,7 +4,6 @@
 #include "graphics.h"
 #include "enemies_manager.h"
 #include "level_manager.h"
-#include "assets.h"
 
 void update_game() {
     game_frame++;
@@ -30,7 +29,7 @@ void update_game() {
             // Calculating collisions to decide whether the player is allowed to jump
         Player::getInstancePlayer().set_is_player_on_ground(
         LevelManager::getInstanceLevel().is_colliding(
-    {Player::getInstancePlayer().get_player_posX(), Player::getInstancePlayer().get_player_posY() + 0.1f},
+    {Player::getInstancePlayer().get_player_pos_X(), Player::getInstancePlayer().get_player_pos_Y() + 0.1f},
     WALL
             )
         );

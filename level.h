@@ -6,9 +6,8 @@ class Level {
 public:
     Level(const size_t rows, const size_t columns, char* data)
     : rows(rows), columns(columns), data(data) {};
+
     Level() : rows{0}, columns{0}, data(nullptr) {};
-
-
 
     [[nodiscard]] size_t get_rows() const {
         return rows;
@@ -32,6 +31,7 @@ public:
     void set_data(char *data) {
         this->data = data;
     }
+
     static char& get_level_cell(size_t row, size_t column);
 
 private:

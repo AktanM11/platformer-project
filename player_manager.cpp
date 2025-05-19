@@ -4,8 +4,6 @@
 #include  "enemies_manager.h"
 #include "level.h"
 #include "level_manager.h"
-
-#include "player.h"
 void PlayerController::reset_player_stats() {
     player_lives = MAX_PLAYER_LIVES;
     for (int i = 0; i < LEVEL_COUNT; i++) {
@@ -36,9 +34,9 @@ void PlayerController::spawn_player() {
             char cell = Level::get_level_cell(row, column);;
 
             if (cell == PLAYER) {
-                Player::getInstancePlayer().set_player_posX(column);
-                Player::getInstancePlayer().set_player_posY(row);
-                LevelManager::getInstanceLevel().set_level_cell(Player::getInstancePlayer().get_player_posX(), Player::getInstancePlayer().get_player_posY(), AIR);
+                Player::getInstancePlayer().set_player_pos_X(column);
+                Player::getInstancePlayer().set_player_pos_Y(row);
+                LevelManager::getInstanceLevel().set_level_cell(Player::getInstancePlayer().get_player_pos_X(), Player::getInstancePlayer().get_player_pos_Y(), AIR);
                 return;
             }
         }
@@ -48,12 +46,12 @@ void PlayerController::spawn_player() {
 void PlayerController::move_player_horizontally(float delta) {
     // See if the player can move further without touching a wall;
     // otherwise, prevent them from getting into a wall by rounding their position
-    float next_x = Player::getInstancePlayer().get_player_posX() + delta;
-    if (!LevelManager::getInstanceLevel().is_colliding({next_x, Player::getInstancePlayer().get_player_posY()}, WALL)) {
-        Player::getInstancePlayer().set_player_posX(next_x);
+    float next_x = Player::getInstancePlayer().get_player_pos_X() + delta;
+    if (!LevelManager::getInstanceLevel().is_colliding({next_x, Player::getInstancePlayer().get_player_pos_Y()}, WALL)) {
+        Player::getInstancePlayer().set_player_pos_X(next_x);
     }
     else {
-        Player::getInstancePlayer().set_player_posX(roundf(Player::getInstancePlayer().get_player_posX()));
+        Player::getInstancePlayer().set_player_pos_X(roundf(Player::getInstancePlayer().get_player_pos_X()));
         return;
     }
 
@@ -96,7 +94,7 @@ void PlayerController::update_player() {
     }
 
     // Kill the player if they touch a spike or fall below the level
-    if (LevelManager::getInstanceLevel().is_colliding(Player::getInstancePlayer().get_player_pos(), SPIKE) || Player::getInstancePlayer().get_player_posY() > LevelManager::getInstanceLevel().get_current_level().get_rows()) {
+    if (LevelManager::getInstanceLevel().is_colliding(Player::getInstancePlayer().get_player_pos(), SPIKE) || Player::getInstancePlayer().get_player_pos_Y() > LevelManager::getInstanceLevel().get_current_level().get_rows()) {
         kill_player();
     }
 
@@ -124,7 +122,7 @@ void PlayerController::draw_player() {
     // Shift the camera to the center of the screen to allow to see what is in front of the player
     Vector2 pos = {
         horizontal_shift,
-        Player::getInstancePlayer().get_player_posY() * cell_size
+        Player::getInstancePlayer().get_player_pos_Y() * cell_size
 };
 
     // Pick an appropriate sprite for the player
@@ -144,7 +142,8 @@ void PlayerController::draw_player() {
         draw_image(player_dead_image, pos, cell_size);
     }
 }
-void kill_player() {
+
+void PlayerController::kill_player() {
     // Decrement a life and reset all collected coins in the current level
     PlaySound(player_death_sound);
     game_state = DEATH_STATE;

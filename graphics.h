@@ -42,7 +42,7 @@ void derive_graphics_metrics_from_loaded_level() {
 
 void draw_parallax_background() {
     // First uses the player's position
-    float initial_offset      = -(Player::getInstancePlayer().get_player_posX() * PARALLAX_PLAYER_SCROLLING_SPEED + game_frame * PARALLAX_IDLE_SCROLLING_SPEED);
+    float initial_offset      = -(Player::getInstancePlayer().get_player_pos_X() * PARALLAX_PLAYER_SCROLLING_SPEED + game_frame * PARALLAX_IDLE_SCROLLING_SPEED);
 
     // Calculate offsets for different layers
     float background_offset   = initial_offset;
@@ -105,7 +105,7 @@ void draw_game_overlay() {
 //             Vector2 pos = {
 //                     // Move the level to the left as the player advances to the right,
 //                     // shifting to the left to allow the player to be centered later
-//                     (static_cast<float>(column) - Player::getInstancePlayer().get_player_posX()) * cell_size + horizontal_shift,
+//                     (static_cast<float>(column) - Player::getInstancePlayer().get_player_pos_X()) * cell_size + horizontal_shift,
 //                     static_cast<float>(row) * cell_size
 //             };
 //
@@ -143,7 +143,7 @@ void draw_game_overlay() {
 //     // Shift the camera to the center of the screen to allow to see what is in front of the player
 //     Vector2 pos = {
 //             horizontal_shift,
-//             Player::getInstancePlayer().get_player_posY() * cell_size
+//             Player::getInstancePlayer().get_player_pos_Y() * cell_size
 //     };
 //
 //     // Pick an appropriate sprite for the player

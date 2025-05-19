@@ -5,7 +5,6 @@
 #include "globals.h"
 #include "player.h"
 #include <fstream>
-
 #include "player_manager.h"
 
 bool LevelManager::is_inside_level(int row, int column) {
@@ -107,7 +106,7 @@ void LevelManager::draw_level() {
             Vector2 pos = {
                 // Move the level to the left as the player advances to the right,
                 // shifting to the left to allow the player to be centered later
-                (static_cast<float>(column) - Player::getInstancePlayer().get_player_posX()) * cell_size + horizontal_shift,
+                (static_cast<float>(column) - Player::getInstancePlayer().get_player_pos_X()) * cell_size + horizontal_shift,
                 static_cast<float>(row) * cell_size
         };
 
